@@ -25,7 +25,7 @@ failed = {}
 def processFile(file):
     filePath = os.path.join(file, directory)
     with open(filepath, "r") as openFile:
-        parsedData = data.readlines()
+        parsedData = openFile.readlines()
     requestData = {}
     for index, field in enumerate(fields):
         requestData[field] = parsedData[index]
