@@ -8,13 +8,13 @@ import re
 try:
     directory = sys.argv[1]
 except IndexError:
-    #raise Exception("No directory path provided")
-    pass
-    
+    raise Exception("No directory path provided")
+
+
 url = input("Provide destination address:\n")
 
 fields = []
-fieldNumber = int(input("Enter ammount of expected fields in the file to be processed.\n"))
+fieldNumber = int(input("Enter amount of expected fields in the file to be processed.\n"))
 for x in range(1, fieldNumber+1):
     field = input(f"Name for field {x}:\n")
     fields.append(field)
@@ -24,7 +24,7 @@ failed = {}
 
 def processFile(file):
     filePath = os.path.join(file, directory)
-    with open(filepath, "r") as openFile:
+    with open(filePath, "r") as openFile:
         parsedData = openFile.readlines()
     requestData = {}
     for index, field in enumerate(fields):
@@ -46,7 +46,7 @@ def processFile(file):
 fileList = os.listdir(directory)
 for file in fileList:
     processFile(file)
-print(f"Successfully proccessed {success} of {len(fileList)} files.")
+print(f"Successfully processed {success} of {len(fileList)} files.")
 if len(fileList) != success:
     answer = input("List failed files? (Y/N)\n")
     if answer.lower() == "y":
