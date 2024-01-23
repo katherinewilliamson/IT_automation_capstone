@@ -52,4 +52,3 @@ if len(fileList) != success:
     if answer.lower() == "y":
         for item, code in failed.items():
             print(f"{file} - Status code {code}")
-            

@@ -16,7 +16,7 @@ success = 0
 fail = {}
 
 for file in os.listdir(directory):
-    filepath = os.join.path(directory, file)
+    filepath = os.path.join(directory, file)
     with open(filepath, "rb") as openfile:
         response = requests.post(url, files={'file': openfile})
     if response.ok:
