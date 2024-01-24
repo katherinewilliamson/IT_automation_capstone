@@ -3,6 +3,7 @@
 import requests
 import sys
 import os
+import re
 
 try:
     directory = sys.argv[1]
@@ -14,8 +15,13 @@ url = input("Provide destination address\n")
 
 success = 0
 fail = {}
-
+jpgFiles = []
 for file in os.listdir(directory):
+    if bool(re.search(r".jpeg", file)):
+        jpgFiles.append(file)
+
+for file in jpgFiles:
+    print(file)
     filepath = os.path.join(directory, file)
     with open(filepath, "rb") as openfile:
         response = requests.post(url, files={'file': openfile})
@@ -26,7 +32,7 @@ for file in os.listdir(directory):
         print(f"POST request failed for {file}, status code {response.status_code}")
         fail[file] = response.status_code
 
-print(f"Complete. Successfully processed {success} out of {len(os.listdir(directory))} files")
+print(f"Complete. Successfully processed {success} out of {len(jpgFiles)} files")
 if len(list(fail.keys())) > 0:
     print("List unsuccessful file(s)? (Y/N)")
     answer = input()

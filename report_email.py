@@ -6,6 +6,8 @@ from datetime import date
 import reports
 import emails
 
+cwd = os.getcwd()
+
 def getDate():
     capturedTime = datetime.date.today()
     currentDate = capturedTime.strftime("%B %d, %Y")
@@ -21,16 +23,17 @@ def processFiles(directory):
             parsedData = currentFile.readlines()
         for index, field in enumerate(fields):
             supplierData[field] = parsedData[index]
-        contentItems.append(["name: {}\nweight: {}".format(supplierData["name"], supplierData["weight"])])
-    content = "<br>".join(contentItems)
+        contentItems.append("name: {}\nweight: {}".format(supplierData["name"], supplierData["weight"]))
+    content = "<br></br>".join(contentItems)
     return content
         
 if __name__ == "__main__":
-    paragraph = processFiles(directory="supplier-data/descriptions/")
+    directoryPath = os.path.join(cwd, "supplier-data/descriptions/")
+    paragraph = processFiles(directoryPath)
     currentDate = getDate()
     title = f"Processed Update on {currentDate}"
-    attachment = "/tmp/processed.pdf"
+    attachment = os.path.join(cwd, "tmp/processed.pdf")
     reports.generate_report(attachment, title, paragraph)
-    email = emails.generate_email("automation@example.com", "<username>@example.com", "Upload Completed - Online Fruit Store", "All fruits are uploaded to our website successfully. A detailed list is attached to this email.", attachment)
+    email = emails.generate_email("automation@example.com", "username@example.com", "Upload Completed - Online Fruit Store", "All fruits are uploaded to our website successfully. A detailed list is attached to this email.", attachment)
     emails.send_email(email)
     

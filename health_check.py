@@ -48,7 +48,7 @@ def checkDisk():
 
 def reportError(message):
     sender = "automation@example.com"
-    recipient =
+    recipient ="username@example.com"
     body = "Please check your system and resolve the issue as soon as possible."
     email = emails.generate_email(sender, recipient, message, body)
     emails.send_email(email)

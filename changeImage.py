@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 import os
+
+import PIL
 from PIL import Image
 import sys
 
@@ -26,8 +28,11 @@ imageSize = (x,y)
 fileList = os.listdir(directory)
 
 for file in fileList:
-    filename, ex = os.path.splitext(file)
-    filepath = os.path.join(directory, file)
-    with Image.open(filepath) as image:
-        finalpath=os.path.join(directory, filename+".jpg")
-        image.resize(imageSize).convert("RGB").save(finalpath, "JPEG")
+    try:
+        filename, ex = os.path.splitext(file)
+        filepath = os.path.join(directory, file)
+        with Image.open(filepath) as image:
+            finalpath=os.path.join(directory, filename+".jpg")
+            image.resize(imageSize).convert("RGB").save(finalpath, "JPEG")
+    except PIL.UnidentifiedImageError:
+        pass
